@@ -30,12 +30,11 @@ def properties_list(request):
 def create_property(request):
     try:
         form = PropertyForm(request.POST, request.FILES)
-        trollan
+
         if form.is_valid():
-            property:Property = form.save(commit=False)
-            property.lanlord = request.user
-        
-            
+            property = form.save(commit=False)
+            property.landlord = request.user
+            property.save()
 
             return JsonResponse({'success': True})
         else:
