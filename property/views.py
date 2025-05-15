@@ -1,8 +1,7 @@
 
 from .models import Property
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import authenticate
+from .serializers import PropertiesListSerializer, PropertiesDetailsSerializer
 
 from django.http import JsonResponse
 from django.urls import reverse
@@ -25,8 +24,17 @@ def properties_list(request):
     })
 
 
-@api_view(['POST', 'FILES'])
+@api_view(['GET'])
+@authentication_classes([])
 @permission_classes([])
+def properties_detail(request, pk):
+    properties = Property.objects.get(pk=pk)
+    serializer = PropertiesDetailsSerializer(properties, many=False)
+
+    return JsonResponse(serializer.data)
+
+
+@api_view(['POST', 'FILES'])
 def create_property(request):
     try:
         form = PropertyForm(request.POST, request.FILES)
