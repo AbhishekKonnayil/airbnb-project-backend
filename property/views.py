@@ -35,6 +35,7 @@ def properties_detail(request, pk):
 
 
 @api_view(['POST', 'FILES'])
+@permission_classes([])
 def create_property(request):
     try:
         form = PropertyForm(request.POST, request.FILES)
