@@ -1,7 +1,7 @@
 
 from .models import Property, Reservation
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from .serializers import PropertiesListSerializer, PropertiesDetailsSerializer
+from .serializers import PropertiesListSerializer, PropertiesDetailsSerializer, ReservationListSerializer
 
 from django.http import JsonResponse
 from django.urls import reverse
@@ -17,21 +17,35 @@ from rest_framework import status
 def properties_list(request):
 
     properties = Property.objects.all()
+    landlord_id = request.GET.get('landlord_id', "")
+    if landlord_id:
+        properties = properties.filter(landlord_id=landlord_id)
     serializer = PropertiesListSerializer(properties, many=True)
 
     return JsonResponse({
-        'data': serializer.data
-    })
+            'data': serializer.data
+        })
 
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
 def properties_detail(request, pk):
-    properties = Property.objects.get(pk=pk)
-    serializer = PropertiesDetailsSerializer(properties, many=False)
+    property = Property.objects.get(pk=pk)
+    serializer = PropertiesDetailsSerializer(property, many=False)
 
     return JsonResponse(serializer.data)
+
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def property_reservations(request, pk):
+    property = Property.objects.get(pk=pk)
+    reservation = property.reservations.all()
+    serializer = ReservationListSerializer(reservation, many=True)
+
+    return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['POST', 'FILES'])

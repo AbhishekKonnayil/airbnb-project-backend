@@ -7,5 +7,7 @@ urlpatterns = [
     path('create/', views.create_property, name='create_property'),
     path('<uuid:pk>/', views.properties_detail, name='property_detail'),
     path('<uuid:pk>/book/', views.book_property, name='book_property'),
+    path('<uuid:pk>/reservations/', views.property_reservations,
+         name='property_reservations'),
 
 ]
