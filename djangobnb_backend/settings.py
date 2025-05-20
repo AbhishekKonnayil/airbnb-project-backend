@@ -86,17 +86,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
     'rest_framework',
-    'useraccount',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+
+
     'dj_rest_auth',
+    'dj_rest_auth.registration',
+
+
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+
+
+
     'corsheaders',
-    'rest_framework_simplejwt',
-    'dj_rest_auth.registration',
+
+
     'property',
-    'allauth.socialaccount'
+    'chat',
+    'useraccount',
+
 
 ]
 
