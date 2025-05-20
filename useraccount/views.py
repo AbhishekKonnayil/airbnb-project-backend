@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .models import User
 from .serializers import UserDetailSerializer
+from property.serializers import ReservationListSerializer
 
 # Create your views here.
 
@@ -24,5 +25,15 @@ class LoginView_(LoginView):
 def landlord_detail(request, pk):
     user = User.objects.get(pk=pk)
     serializer = UserDetailSerializer(user, many=False)
+
+    return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+@permission_classes([])
+def reservation_list(request):
+    reservations = request.user.reservations.all()
+    serializer = ReservationListSerializer(reservations, many=True)
+    print('user', request.user)
 
     return JsonResponse(serializer.data, safe=False)

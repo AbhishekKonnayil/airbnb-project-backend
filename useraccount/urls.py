@@ -4,12 +4,13 @@ from .views import RegisterView_, LoginView_
 
 from dj_rest_auth.views import LogoutView, UserDetailsView
 from rest_framework_simplejwt.views import TokenVerifyView
-from .import views
+from . import views
 
 urlpatterns = [
     path('register/', RegisterView_.as_view(), name='rest_register'),
     path('login/', LoginView_.as_view(), name='rest_login'),
     path('logout/', LogoutView.as_view(), name='rest_logout'),
+    path('myreservations/', views.reservation_list, name='reservation_list'),
     path('accounts/', include('allauth.urls')),
     path('<uuid:pk>/', views.landlord_detail, name='landlord_detail')
 ]

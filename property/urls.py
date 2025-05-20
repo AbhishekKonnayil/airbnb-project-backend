@@ -9,5 +9,7 @@ urlpatterns = [
     path('<uuid:pk>/book/', views.book_property, name='book_property'),
     path('<uuid:pk>/reservations/', views.property_reservations,
          name='property_reservations'),
+    path('<uuid:pk>/toggle_favorite/', views.toggle_favorite,
+         name='toggle_favorite'),
 
 ]
