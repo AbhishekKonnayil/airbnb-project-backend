@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', LoginView_.as_view(), name='rest_login'),
     path('logout/', LogoutView.as_view(), name='rest_logout'),
     path('myreservations/', views.reservation_list, name='reservation_list'),
+    path('token/refresh/', get_refresh_view().as_view(), name='token_refresh'),
     path('accounts/', include('allauth.urls')),
     path('<uuid:pk>/', views.landlord_detail, name='landlord_detail')
 ]
